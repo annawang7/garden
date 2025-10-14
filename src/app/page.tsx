@@ -189,7 +189,7 @@ export default function Garden() {
             }, "image/png");
           });
 
-          const filename = `flower-${Date.now()}.png`;
+          const filename = `eggplant-${Date.now()}.png`;
 
           // Upload to Supabase
           const uploadResult = await uploadImage(blob, filename);
