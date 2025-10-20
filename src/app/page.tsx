@@ -78,7 +78,6 @@ export default function Garden() {
   const [displayedCaption, setDisplayedCaption] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const [showQR, setShowQR] = useState(false);
   const canvasRef = useRef<CanvasRef>(null);
 
   const colors = [
@@ -356,6 +355,11 @@ export default function Garden() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* Title */}
+      <h1 className="text-4xl md:text-5xl text-gray-600 mt-8 mb-4 z-30 relative">
+        Anna&apos;s Secret Garden
+      </h1>
+
       {/* Island background */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-20 flex-col md:flex-row w-full justify-center">
         <div style={{ animation: "bob 3s ease-in-out infinite" }}>
@@ -452,28 +456,6 @@ export default function Garden() {
           </div>
         </div>
       </div>
-
-      {/* QR Code in bottom left corner */}
-      {showQR ? (
-        <div
-          className="fixed bottom-8 right-8 z-50"
-          onClick={() => setShowQR(!showQR)}
-        >
-          <img
-            src="/qr.png"
-            alt="QR Code"
-            className="w-48 h-48 bg-white rounded-lg shadow-lg border-2 border-gray-300"
-          />
-        </div>
-      ) : (
-        <button
-          onClick={() => setShowQR(!showQR)}
-          className="fixed bottom-8 right-8 py-1 px-2 flex items-center justify-center rounded-full text-sm border border-gray-600 shadow-md hover:scale-110 text-gray-600"
-          title="Toggle QR Code"
-        >
-          📱
-        </button>
-      )}
 
       <style jsx>{`
         @keyframes bob {
