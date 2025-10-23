@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { supabase } from "../../../lib/supabase";
 import Link from "next/link";
 import { Walter_Turncoat } from "next/font/google";
@@ -19,33 +19,75 @@ interface Drawing {
   manual_moderation?: boolean;
 }
 
+const ITEMS_PER_PAGE = 200;
+
 export default function Gallery() {
   const [flowers, setFlowers] = useState<Drawing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const fetchFlowers = useCallback(
+    async (page: number) => {
+      setLoading(true);
+      try {
+        const offset = (page - 1) * ITEMS_PER_PAGE;
+
+        // Fetch the flowers for this page
+        const { data, error } = await supabase
+          .from("flowers")
+          .select("*")
+          .or("manual_moderation.is.null,manual_moderation.eq.false")
+          .order("created_at", { ascending: false })
+          .range(offset, offset + ITEMS_PER_PAGE - 1);
+
+        if (error) {
+          throw error;
+        }
+
+        // Fetch the total count (only on first load or when needed)
+        if (totalCount === 0) {
+          const { count, error: countError } = await supabase
+            .from("flowers")
+            .select("*", { count: "exact", head: true })
+            .or("manual_moderation.is.null,manual_moderation.eq.false");
+
+          if (countError) {
+            console.error("Error fetching count:", countError);
+          } else {
+            setTotalCount(count || 0);
+          }
+        }
+
+        setFlowers(data || []);
+      } catch (err) {
+        console.error("Error fetching flowers:", err);
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch flowers"
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [totalCount]
+  );
 
   useEffect(() => {
-    fetchAllFlowers();
-  }, []);
+    fetchFlowers(currentPage);
+  }, [currentPage, fetchFlowers]);
 
-  const fetchAllFlowers = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("flowers")
-        .select("*")
-        .or("manual_moderation.is.null,manual_moderation.eq.false")
-        .order("created_at", { ascending: false });
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
-      if (error) {
-        throw error;
-      }
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-      setFlowers(data || []);
-    } catch (err) {
-      console.error("Error fetching flowers:", err);
-      setError(err instanceof Error ? err.message : "Failed to fetch flowers");
-    } finally {
-      setLoading(false);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
     }
   };
 
@@ -68,7 +110,9 @@ export default function Gallery() {
 
         {/* Stats */}
         {!loading && (
-          <p className="text-gray-600 mb-6">{flowers.length} total flowers</p>
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-gray-600">{totalCount} total flowers</p>
+          </div>
         )}
 
         {/* Loading state */}
@@ -102,6 +146,37 @@ export default function Gallery() {
                 />
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Pagination Controls */}
+        {!loading && !error && flowers.length > 0 && totalPages > 1 && (
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <button
+              onClick={goToPreviousPage}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded-full border transition-all ${
+                currentPage === 1
+                  ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                  : "border-green-800 text-green-800 hover:bg-green-800 hover:text-white"
+              }`}
+            >
+              ← Previous
+            </button>
+            <span className="text-gray-600">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded-full border transition-all ${
+                currentPage === totalPages
+                  ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                  : "border-green-800 text-green-800 hover:bg-green-800 hover:text-white"
+              }`}
+            >
+              Next →
+            </button>
           </div>
         )}
 
