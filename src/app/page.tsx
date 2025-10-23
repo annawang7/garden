@@ -345,7 +345,7 @@ export default function Garden() {
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-start relative ${rubikDoodleShadow.className}`}
+      className={`min-h-screen overflow-auto flex flex-col items-center justify-start relative ${rubikDoodleShadow.className}`}
       style={{
         background: "#fffff3",
       }}
@@ -356,7 +356,7 @@ export default function Garden() {
       </Head>
 
       {/* Island background */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-20 flex-col md:flex-row w-full justify-center">
+      <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 z-10 flex md:gap-20 gap-10 flex-col md:flex-row w-full justify-center items-center">
         <div style={{ animation: "bob 3s ease-in-out infinite" }}>
           <img
             src="/island.png"
