@@ -355,11 +355,6 @@ export default function Garden() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Title */}
-      <h1 className="text-4xl md:text-5xl text-gray-600 mt-8 mb-4 z-30 relative">
-        Anna&apos;s Secret Garden
-      </h1>
-
       {/* Island background */}
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 flex items-center gap-20 flex-col md:flex-row w-full justify-center">
         <div style={{ animation: "bob 3s ease-in-out infinite" }}>
