@@ -298,6 +298,7 @@ export default function Garden() {
       const { data, error } = await supabase
         .from("flowers")
         .select("*")
+        .neq("manual_moderation", true)
         .order("created_at", { ascending: false })
         .limit(20);
 
