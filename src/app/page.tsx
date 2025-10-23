@@ -298,7 +298,7 @@ export default function Garden() {
       const { data, error } = await supabase
         .from("flowers")
         .select("*")
-        // .neq("manual_moderation", true)
+        .or("manual_moderation.is.null,manual_moderation.eq.false")
         .order("created_at", { ascending: false })
         .limit(20);
 
