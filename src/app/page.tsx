@@ -52,6 +52,7 @@ export const Flower = ({
           transform: "scale(0)",
           transformOrigin: "bottom",
         }}
+        onClick={() => console.log(flower.id)}
       >
         <img
           key={flower.id}
@@ -498,6 +499,15 @@ export default function Garden() {
           </div>
         </div>
       )}
+
+      {/* Gallery Link */}
+      <a
+        href="/gallery"
+        className="fixed bottom-8 right-8 py-1 px-3 flex items-center justify-center rounded-full text-sm border border-green-800 shadow-md hover:scale-110 text-green-800 transition-transform z-50"
+        title="View Gallery"
+      >
+        🖼️ See flower gallery
+      </a>
     </div>
   );
 }
