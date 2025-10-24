@@ -358,7 +358,7 @@ export default function Garden() {
       </Head>
 
       {/* Island background */}
-      <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 z-10 flex md:gap-20 gap-10 flex-col md:flex-row w-full justify-center items-center">
+      <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 z-10 py-10 flex md:gap-20 gap-10 flex-col md:flex-row w-full justify-center items-center">
         <div style={{ animation: "bob 3s ease-in-out infinite" }}>
           <img
             src="/island.png"
@@ -435,11 +435,11 @@ export default function Garden() {
                 className="border-4 border-gray-600 border-dashed rounded cursor-crosshair touch-none"
               />
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-col items-center">
                 <button
                   onClick={saveDrawing}
                   disabled={isAnalyzing}
-                  className={`py-1 px-2 flex items-center justify-center rounded-full ${
+                  className={`py-1 px-2 flex items-center justify-center rounded-full cursor-pointer ${
                     rubikDoodleShadow.className
                   } text-sm border border-green-800 shadow-md hover:scale-110 ${
                     isAnalyzing ? "text-gray-400" : "text-green-800"
@@ -448,6 +448,15 @@ export default function Garden() {
                 >
                   {isAnalyzing ? "🌱 Planting..." : "🌱 Plant"}
                 </button>
+
+                {/* Gallery Link */}
+                <a
+                  href="/gallery"
+                  className=" md:invisible py-1 px-3 flex items-center justify-center rounded-full text-sm border border-green-800 shadow-md hover:scale-110 text-green-800"
+                  title="View Gallery"
+                >
+                  🖼️ See flower gallery
+                </a>
               </div>
             </div>
           </div>
@@ -503,7 +512,7 @@ export default function Garden() {
       {/* Gallery Link */}
       <a
         href="/gallery"
-        className="fixed bottom-8 right-8 py-1 px-3 flex items-center justify-center rounded-full text-sm border border-green-800 shadow-md hover:scale-110 text-green-800 transition-transform z-50"
+        className="fixed bottom-8 invisible md:visible right-8 py-1 px-3 flex items-center justify-center rounded-full text-sm border border-green-800 shadow-md hover:scale-110 text-green-800 transition-transform z-50"
         title="View Gallery"
       >
         🖼️ See flower gallery
