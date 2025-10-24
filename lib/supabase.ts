@@ -12,6 +12,7 @@ export async function uploadImage(imageBlob: Blob, filename: string) {
       .from("garden")
       .upload(filename, imageBlob, {
         contentType: "image/png",
+        cacheControl: "31536000",
         upsert: false,
       });
 
