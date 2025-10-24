@@ -180,7 +180,7 @@ export default function Garden() {
         } catch (uploadError) {
           console.error("Upload error:", uploadError);
         }
-      } else if (analysisResult.probabilities["a doodle of a penis"] > 0.95) {
+      } else if (analysisResult && analysisResult.isEggplant) {
         try {
           // Convert canvas to blob
           const blob = await new Promise<Blob>((resolve) => {
@@ -192,20 +192,20 @@ export default function Garden() {
           const filename = `eggplant-${Date.now()}.png`;
 
           // Upload to Supabase
-          const uploadResult = await uploadImage(blob, filename);
+          // const uploadResult = await uploadImage(blob, filename);
 
-          if (uploadResult.success) {
-            // Save metadata
-            await saveMetadata(
-              "eggplants",
-              filename,
-              uploadResult.url!,
-              analysisResult.probabilities["a doodle of a penis"]
-            );
+          // if (uploadResult.success) {
+          //   // Save metadata
+          //   await saveMetadata(
+          //     "eggplants",
+          //     filename,
+          //     uploadResult.url!,
+          //     analysisResult.eggplantProbability
+          //   );
 
-            // Refresh the flowers list
-            fetchEggplants();
-          }
+          //   // Refresh the flowers list
+          //   fetchEggplants();
+          // }
         } catch (uploadError) {
           console.error("Upload error:", uploadError);
         }

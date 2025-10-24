@@ -9,9 +9,13 @@ const labels = [
   "a doodle of a flower",
   "a sketch of a flower",
   "artwork with flowers",
+  "a doodle of a penis",
   "a doodle",
   "a doodle of an object",
-  "a doodle of a penis",
+  "a swastika",
+  "handwriting",
+  "text",
+  "the word flower",
 ];
 
 export async function POST(request: NextRequest) {
@@ -45,14 +49,19 @@ export async function POST(request: NextRequest) {
       probabilities[0] + probabilities[1] + probabilities[2]; // Sum of flower-related probabilities
     const isFlower = flowerProbability > 0.9; // Threshold for considering it a flower
 
+    const eggplantProbability = probabilities[3];
+
     const probabilityMap = Object.fromEntries(
       labels.map((label, index) => [label, (output as number[])[index]])
     );
 
+    console.log(probabilityMap);
+
     return NextResponse.json({
       isFlower,
       flowerProbability,
-      probabilities: probabilityMap,
+      isEggplant: eggplantProbability > 0.95,
+      eggplantProbability,
     });
   } catch (error) {
     console.error("Error moderating image:", error);
