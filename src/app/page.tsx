@@ -301,7 +301,7 @@ export default function Garden() {
         .select("*")
         .or("manual_moderation.is.null,manual_moderation.eq.false")
         .order("created_at", { ascending: false })
-        .limit(25);
+        .limit(22);
 
       if (error) {
         throw error;
@@ -322,7 +322,7 @@ export default function Garden() {
         .from("eggplants")
         .select("*")
         .order("created_at", { ascending: false })
-        .limit(25);
+        .limit(22);
 
       if (error) {
         throw error;
