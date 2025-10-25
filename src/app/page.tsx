@@ -192,20 +192,20 @@ export default function Garden() {
           const filename = `eggplant-${Date.now()}.png`;
 
           // Upload to Supabase
-          // const uploadResult = await uploadImage(blob, filename);
+          const uploadResult = await uploadImage(blob, filename);
 
-          // if (uploadResult.success) {
-          //   // Save metadata
-          //   await saveMetadata(
-          //     "eggplants",
-          //     filename,
-          //     uploadResult.url!,
-          //     analysisResult.eggplantProbability
-          //   );
+          if (uploadResult.success) {
+            // Save metadata
+            await saveMetadata(
+              "eggplants",
+              filename,
+              uploadResult.url!,
+              analysisResult.eggplantProbability
+            );
 
-          //   // Refresh the flowers list
-          //   fetchEggplants();
-          // }
+            // Refresh the flowers list
+            fetchEggplants();
+          }
         } catch (uploadError) {
           console.error("Upload error:", uploadError);
         }
