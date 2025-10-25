@@ -150,6 +150,16 @@ export default function Garden() {
         return;
       }
 
+      if (analysisResult && ["100.0.112.35"].includes(analysisResult.ip)) {
+        setCaption("That's not a flower. Try again? ");
+        setDisplayedCaption("");
+
+        setTimeout(() => {
+          setCaption("Add a flower to our garden? ");
+          setDisplayedCaption("");
+        }, 5000);
+      }
+
       // If it's detected as a flower, upload to Supabase
       if (analysisResult && analysisResult.isFlower) {
         try {
