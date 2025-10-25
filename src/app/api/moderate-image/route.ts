@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Replicate from "replicate";
+import { supabase } from "../../../../lib/supabase";
 
 const replicate = new Replicate({
   auth: process.env.REPLICATE_API_TOKEN,
@@ -34,6 +35,27 @@ export async function POST(request: NextRequest) {
       request.headers.get("x-forwarded-for") ||
       request.headers.get("x-real-ip") ||
       "unknown";
+
+    // Check if IP has exceeded the limit (10 flowers)
+    const { count, error: countError } = await supabase
+      .from("flowers")
+      .select("*", { count: "exact", head: true })
+      .eq("ip_address", ip);
+
+    if (countError) {
+      console.error("Error checking IP count:", countError);
+    } else if (count !== null && count >= 10) {
+      return NextResponse.json(
+        {
+          error: "Rate limit exceeded",
+          message:
+            "You've reached the maximum of 10 flowers. Thank you for contributing!",
+          rateLimited: true,
+          currentCount: count,
+        },
+        { status: 429 }
+      );
+    }
 
     // Use CLIP to classify the image
     const text = labels.join(" | ");

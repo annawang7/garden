@@ -124,17 +124,34 @@ export default function Garden() {
       body: JSON.stringify({ imageData }),
     });
 
+    const result = await response.json();
+
     if (!response.ok) {
+      if (response.status === 429) {
+        // Rate limited
+        throw new Error(
+          result.message || "You've planted 10 flowers already! Thank you!"
+        );
+      }
       throw new Error("Failed to analyze image");
     }
 
-    return await response.json();
+    return result;
   };
 
   const saveDrawing = async () => {
     setIsAnalyzing(true);
 
     try {
+      // Check localStorage for client-side limit
+      const flowerCount = parseInt(localStorage.getItem("flowerCount") || "0");
+      if (flowerCount >= 10) {
+        setCaption("You've planted 10 flowers already! Thank you!");
+        setDisplayedCaption("");
+        setIsAnalyzing(false);
+        return;
+      }
+
       const exportCanvas = canvasRef.current?.createExportCanvas();
       if (!exportCanvas) return;
 
@@ -146,6 +163,18 @@ export default function Garden() {
         analysisResult = await analyzeImageData(imageData);
       } catch (analysisError) {
         console.error("Error during analysis:", analysisError);
+
+        // Check if it's a rate limit error
+        if (
+          analysisError instanceof Error &&
+          analysisError.message.includes("maximum")
+        ) {
+          setCaption(analysisError.message);
+          setDisplayedCaption("");
+          // Update localStorage to prevent future attempts
+          localStorage.setItem("flowerCount", "10");
+        }
+
         setIsAnalyzing(false);
         return;
       }
@@ -187,6 +216,18 @@ export default function Garden() {
               analysisResult.flowerProbability,
               analysisResult.ip
             );
+
+            // Increment localStorage counter
+            const currentCount = parseInt(
+              localStorage.getItem("flowerCount") || "0"
+            );
+            localStorage.setItem("flowerCount", String(currentCount + 1));
+
+            // Check if they've hit the limit
+            if (currentCount + 1 >= 10) {
+              setCaption("That's your 10th flower! Thank you! 🌸");
+              setDisplayedCaption("");
+            }
 
             // Refresh the flowers list
             fetchFlowers();
