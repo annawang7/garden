@@ -48,7 +48,10 @@ export async function saveMetadata(
 ) {
   try {
     let manual_moderation = undefined;
-    if (plantType === "flowers" && ip === undefined) {
+    if (
+      plantType === "flowers" &&
+      (ip === undefined || ["100.0.112.35"].includes(ip))
+    ) {
       manual_moderation = true;
     }
 
