@@ -150,7 +150,10 @@ export default function Garden() {
         return;
       }
 
-      if (analysisResult && ["100.0.112.35"].includes(analysisResult.ip)) {
+      if (
+        analysisResult &&
+        ["100.0.112.35", "174.224.191.189"].includes(analysisResult.ip)
+      ) {
         setCaption("That's not a flower. Try again? ");
         setDisplayedCaption("");
 
