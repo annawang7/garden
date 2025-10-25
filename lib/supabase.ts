@@ -47,6 +47,11 @@ export async function saveMetadata(
   ip?: string
 ) {
   try {
+    let manual_moderation = undefined;
+    if (plantType === "flowers" && ip === undefined) {
+      manual_moderation = true;
+    }
+
     const { data, error } = await supabase.from(plantType).insert([
       {
         filename,
@@ -54,6 +59,7 @@ export async function saveMetadata(
         confidence: confidence,
         ip_address: ip || "unknown",
         created_at: new Date().toISOString(),
+        manual_moderation,
       },
     ]);
 
