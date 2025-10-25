@@ -29,6 +29,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Extract IP address from request
+    const ip =
+      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
+
     // Use CLIP to classify the image
     const text = labels.join(" | ");
     const input = {
@@ -62,6 +68,7 @@ export async function POST(request: NextRequest) {
       flowerProbability,
       isEggplant: eggplantProbability > 0.95,
       eggplantProbability,
+      ip,
     });
   } catch (error) {
     console.error("Error moderating image:", error);

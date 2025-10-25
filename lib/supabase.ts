@@ -43,7 +43,8 @@ export async function saveMetadata(
   plantType: "flowers" | "eggplants",
   filename: string,
   url: string,
-  confidence: number
+  confidence: number,
+  ip?: string
 ) {
   try {
     const { data, error } = await supabase.from(plantType).insert([
@@ -51,6 +52,7 @@ export async function saveMetadata(
         filename,
         image_url: url,
         confidence: confidence,
+        ip_address: ip || "unknown",
         created_at: new Date().toISOString(),
       },
     ]);

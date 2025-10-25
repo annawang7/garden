@@ -171,7 +171,8 @@ export default function Garden() {
               "flowers",
               filename,
               uploadResult.url!,
-              analysisResult.flowerProbability
+              analysisResult.flowerProbability,
+              analysisResult.ip
             );
 
             // Refresh the flowers list
@@ -200,7 +201,8 @@ export default function Garden() {
               "eggplants",
               filename,
               uploadResult.url!,
-              analysisResult.eggplantProbability
+              analysisResult.eggplantProbability,
+              analysisResult.ip
             );
 
             // Refresh the flowers list
