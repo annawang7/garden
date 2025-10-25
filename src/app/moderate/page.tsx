@@ -36,7 +36,7 @@ export default function Moderate() {
 
         // Fetch the flowers for this page
         const { data, error } = await supabase
-          .from("flowers")
+          .from("public_flowers")
           .select("*")
           .order("created_at", { ascending: false })
           .range(offset, offset + ITEMS_PER_PAGE - 1);
@@ -48,7 +48,7 @@ export default function Moderate() {
         // Fetch the total count (only on first load or when needed)
         if (totalCount === 0) {
           const { count, error: countError } = await supabase
-            .from("flowers")
+            .from("public_flowers")
             .select("*", { count: "exact", head: true });
 
           if (countError) {

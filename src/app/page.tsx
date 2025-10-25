@@ -353,7 +353,7 @@ export default function Garden() {
   const fetchFlowers = async () => {
     try {
       const { data, error } = await supabase
-        .from("flowers")
+        .from("public_flowers")
         .select("*")
         .or("manual_moderation.is.null,manual_moderation.eq.false")
         .order("created_at", { ascending: false })

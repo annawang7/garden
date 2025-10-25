@@ -36,7 +36,7 @@ export default function Gallery() {
 
         // Fetch the flowers for this page
         const { data, error } = await supabase
-          .from("flowers")
+          .from("public_flowers")
           .select("*")
           .or("manual_moderation.is.null,manual_moderation.eq.false")
           .order("created_at", { ascending: false })
@@ -49,7 +49,7 @@ export default function Gallery() {
         // Fetch the total count (only on first load or when needed)
         if (totalCount === 0) {
           const { count, error: countError } = await supabase
-            .from("flowers")
+            .from("public_flowers")
             .select("*", { count: "exact", head: true })
             .or("manual_moderation.is.null,manual_moderation.eq.false");
 
