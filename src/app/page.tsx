@@ -2,7 +2,7 @@
 
 import Head from "next/head";
 import { useEffect, useState, useRef, useMemo } from "react";
-import { supabase, uploadImage, saveMetadata } from "../../lib/supabase";
+import { supabase } from "../../lib/supabase";
 import { Walter_Turncoat } from "next/font/google";
 import Canvas, { CanvasRef } from "../../components/Canvas";
 
@@ -202,36 +202,33 @@ export default function Garden() {
             }, "image/png");
           });
 
-          const filename = `flower-${Date.now()}.png`;
+          const formData = new FormData();
+          formData.append("file", blob);
+          formData.append("plantType", "flowers");
+          formData.append(
+            "probability",
+            analysisResult.flowerProbability.toString()
+          );
 
-          // Upload to Supabase
-          const uploadResult = await uploadImage(blob, filename);
+          await fetch("/api/save-image", {
+            method: "POST",
+            body: formData,
+          });
 
-          if (uploadResult.success) {
-            // Save metadata
-            await saveMetadata(
-              "flowers",
-              filename,
-              uploadResult.url!,
-              analysisResult.flowerProbability,
-              analysisResult.ip
-            );
+          // Increment localStorage counter
+          const currentCount = parseInt(
+            localStorage.getItem("flowerCount") || "0"
+          );
+          localStorage.setItem("flowerCount", String(currentCount + 1));
 
-            // Increment localStorage counter
-            const currentCount = parseInt(
-              localStorage.getItem("flowerCount") || "0"
-            );
-            localStorage.setItem("flowerCount", String(currentCount + 1));
-
-            // Check if they've hit the limit
-            if (currentCount + 1 >= 10) {
-              setCaption("That's your 10th flower! Thank you! 🌸");
-              setDisplayedCaption("");
-            }
-
-            // Refresh the flowers list
-            fetchFlowers();
+          // Check if they've hit the limit
+          if (currentCount + 1 >= 10) {
+            setCaption("That's your 10th flower! Thank you! 🌸");
+            setDisplayedCaption("");
           }
+
+          // Refresh the flowers list
+          fetchFlowers();
         } catch (uploadError) {
           console.error("Upload error:", uploadError);
         }
@@ -244,24 +241,20 @@ export default function Garden() {
             }, "image/png");
           });
 
-          const filename = `eggplant-${Date.now()}.png`;
+          await fetch("/api/save-image", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              imageBlob: blob,
+              plantType: "eggplants",
+              probability: analysisResult.eggplantProbability,
+            }),
+          });
 
-          // Upload to Supabase
-          const uploadResult = await uploadImage(blob, filename);
-
-          if (uploadResult.success) {
-            // Save metadata
-            await saveMetadata(
-              "eggplants",
-              filename,
-              uploadResult.url!,
-              analysisResult.eggplantProbability,
-              analysisResult.ip
-            );
-
-            // Refresh the flowers list
-            fetchEggplants();
-          }
+          // Refresh the flowers list
+          fetchEggplants();
         } catch (uploadError) {
           console.error("Upload error:", uploadError);
         }
