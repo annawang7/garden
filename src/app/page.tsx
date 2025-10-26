@@ -241,16 +241,17 @@ export default function Garden() {
             }, "image/png");
           });
 
+          const formData = new FormData();
+          formData.append("file", blob);
+          formData.append("plantType", "eggplants");
+          formData.append(
+            "probability",
+            analysisResult.eggplantProbability.toString()
+          );
+
           await fetch("/api/save-image", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              imageBlob: blob,
-              plantType: "eggplants",
-              probability: analysisResult.eggplantProbability,
-            }),
+            body: formData,
           });
 
           // Refresh the flowers list
