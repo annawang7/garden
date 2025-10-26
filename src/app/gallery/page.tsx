@@ -38,6 +38,7 @@ export default function Gallery() {
         const { data, error } = await supabase
           .from("public_flowers")
           .select("*")
+          .lt("created_at", new Date().toISOString())
           .or("manual_moderation.is.null,manual_moderation.eq.false")
           .order("created_at", { ascending: false })
           .range(offset, offset + ITEMS_PER_PAGE - 1);
