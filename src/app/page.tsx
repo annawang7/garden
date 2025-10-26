@@ -289,7 +289,6 @@ export default function Garden() {
   const generateFlowerPositions = (flowerCount: number) => {
     const positions: Array<{ left: string; top: string; scale: number }> = [];
     const minDistance = 8; // Minimum distance between flowers (in percentage points)
-    console.log("generating positions");
 
     for (let i = 0; i < flowerCount; i++) {
       let attempts = 0;
@@ -340,7 +339,6 @@ export default function Garden() {
       }
     }
 
-    console.log(positions);
     return positions;
   };
 
