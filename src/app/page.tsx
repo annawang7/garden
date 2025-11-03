@@ -417,7 +417,7 @@ export default function Garden() {
           <img
             src="/island.png"
             alt="Garden island"
-            className="flex-1 max-w-full w-[500px]"
+            className="flex-1 max-w-full w-[600px]"
           />
 
           {/* Flowers positioned on the island */}
