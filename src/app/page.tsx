@@ -400,11 +400,6 @@ export default function Garden() {
         background: "#fffff3",
       }}
     >
-      <Head>
-        <title>Garden - Anna Wang</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <h1 className="text-2xl md:text-4xl font-bold py-4 md:py-10 text-green-800">
         Anna&apos;s Secret Garden
       </h1>
