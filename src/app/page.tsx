@@ -33,14 +33,12 @@ export const Flower = ({
 
   return (
     <div
-      className="absolute transition-all duration-300 ease-out cursor-pointer group bottom-0"
+      className="absolute transition-all duration-300 ease-out cursor-pointer group bottom-0 md:w-[100px] md:h-[100px] w-[75px] h-[75px]"
       style={{
         left: position.left,
         top: position.top,
         transform: `scale(${position.scale})`,
         transformOrigin: "center",
-        width: 100,
-        height: 100,
         objectFit: "cover",
         zIndex: Math.floor(parseFloat(position.top)), // Higher z-index for lower positions
       }}
@@ -301,7 +299,7 @@ export default function Garden() {
 
         if (topPercent < 20) {
           leftPercent = 10 + Math.random() * 60; // Island area (20% to 80%)
-        } else if (topPercent < 50) {
+        } else if (topPercent < 60) {
           leftPercent = 40 + Math.random() * 30; // Island area (20% to 80%)
         } else {
           leftPercent = 10 + Math.random() * 40; // Island area (20% to 60%)
