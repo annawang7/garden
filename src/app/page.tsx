@@ -82,11 +82,11 @@ export default function Garden() {
   const canvasRef = useRef<CanvasRef>(null);
 
   const colors = [
-    "#EB3963", // Red
-    "#FFAFA6", // Pink
-    "#F7FF0B", // Yellow
-    "#A1DBFF", // Blue
-    "#206A00", // Green
+    "#E74C3C", // petal 1 – bright crimson red
+    "#FF8C42", // petal 2 – glowing pumpkin orange
+    "#FFD166", // petal 3 – bold golden yellow
+    "#FFB3C1", // accent – soft but bright petal pink
+    "#3C7A3B", // stem – lively mid-green, not too dark
   ];
 
   useEffect(() => {
