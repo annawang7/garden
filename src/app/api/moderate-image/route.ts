@@ -17,6 +17,7 @@ const labels = [
   "handwriting",
   "text",
   "the word flower",
+  "a swastika in a flower",
 ];
 
 export async function POST(request: NextRequest) {
