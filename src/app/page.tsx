@@ -407,8 +407,12 @@ export default function Garden() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <h1 className="text-2xl md:text-4xl font-bold py-4 md:py-10 text-green-800">
+        Anna&apos;s Secret Garden
+      </h1>
+
       {/* Island background */}
-      <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 z-10 py-10 flex md:gap-20 gap-10 flex-col md:flex-row w-full justify-center items-center">
+      <div className="md:absolute md:top-1/2 md:left-1/2 md:transform md:-translate-x-1/2 md:-translate-y-1/2 z-10 flex md:gap-20 px-4 gap-10 flex-col md:flex-row w-full justify-center items-center">
         <div style={{ animation: "bob 3s ease-in-out infinite" }}>
           <img
             src="/island.png"

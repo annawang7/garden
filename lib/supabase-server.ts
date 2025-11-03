@@ -59,6 +59,7 @@ export async function saveMetadata(
         confidence: confidence,
         ip_address: ip || "unknown",
         created_at: new Date().toISOString(),
+        palette: "november",
         manual_moderation,
       },
     ]);
