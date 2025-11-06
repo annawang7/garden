@@ -219,11 +219,11 @@ export default function Garden() {
           );
           localStorage.setItem("flowerCount", String(currentCount + 1));
 
-          // Check if they've hit the limit
-          if (currentCount + 1 >= 10) {
-            setCaption("That's your 10th flower! Thank you! 🌸");
-            setDisplayedCaption("");
-          }
+          // // Check if they've hit the limit
+          // if (currentCount + 1 >= 10) {
+          //   setCaption("That's your 10th flower! Thank you! 🌸");
+          //   setDisplayedCaption("");
+          // }
 
           // Refresh the flowers list
           fetchFlowers();
