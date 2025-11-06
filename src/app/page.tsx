@@ -366,7 +366,7 @@ export default function Garden() {
   const fetchEggplants = async () => {
     try {
       const { data, error } = await supabase
-        .from("eggplants")
+        .from("public_eggplants")
         .select("*")
         .lt("created_at", new Date().toISOString())
         .order("created_at", { ascending: false })
