@@ -32,7 +32,7 @@ export const DrawFlower = ({
 
   return (
     <div
-      className={`z-20 flex flex-col items-center ${
+      className={`z-20 flex flex-col items-center w-64 ${
         orientation === "horizontal" ? "gap-3" : "gap-6"
       }`}
     >
