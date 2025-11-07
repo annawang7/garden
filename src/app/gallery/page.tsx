@@ -27,10 +27,12 @@ export default function Gallery() {
   const [error, setError] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [loadedFlowers, setLoadedFlowers] = useState<Set<number>>(new Set());
 
   const fetchFlowers = useCallback(
     async (page: number) => {
       setLoading(true);
+      setLoadedFlowers(new Set()); // Reset loaded flowers for new page
       try {
         const offset = (page - 1) * ITEMS_PER_PAGE;
 
@@ -77,6 +79,10 @@ export default function Gallery() {
   useEffect(() => {
     fetchFlowers(currentPage);
   }, [currentPage, fetchFlowers]);
+
+  const handleImageLoad = (flowerId: number) => {
+    setLoadedFlowers((prev) => new Set(prev).add(flowerId));
+  };
 
   const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
 
@@ -134,19 +140,28 @@ export default function Gallery() {
         {/* Grid of flowers */}
         {!loading && !error && (
           <div className=" flex flex-wrap gap-4">
-            {flowers.map((flower) => (
-              <div
-                key={flower.id}
-                className="relative aspect-square rounded-lg overflow-hidden group w-12 h-12 cursor-pointer"
-                onClick={() => console.log(flower.id)}
-              >
-                <img
-                  src={flower.image_url}
-                  alt={`Flower ${flower.id}`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-            ))}
+            {flowers.map((flower) => {
+              const isLoaded = loadedFlowers.has(flower.id);
+              return (
+                <div
+                  key={flower.id}
+                  className={`relative aspect-square rounded-lg overflow-hidden group w-12 h-12 cursor-pointer ${
+                    isLoaded ? "animate-growIn" : "opacity-0 scale-0"
+                  }`}
+                  onClick={() => console.log(flower.id)}
+                  style={{
+                    transformOrigin: "center bottom",
+                  }}
+                >
+                  <img
+                    src={flower.image_url}
+                    alt={`Flower ${flower.id}`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    onLoad={() => handleImageLoad(flower.id)}
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
 

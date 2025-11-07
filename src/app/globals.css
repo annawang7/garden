@@ -5,6 +5,25 @@
   --foreground: #171717;
 }
 
+@theme {
+  --animate-growIn: growIn 0.5s ease-out forwards;
+
+  @keyframes growIn {
+    0% {
+      transform: scale(0.5);
+      transform-origin: bottom;
+    }
+    50% {
+      transform: scale(0.95);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scale(1);
+      transform-origin: bottom;
+    }
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

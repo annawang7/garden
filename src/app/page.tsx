@@ -44,8 +44,8 @@ export const Flower = ({
       }}
     >
       <div
+        className="animate-growIn"
         style={{
-          animation: `growIn 0.5s ease-out forwards`,
           animationDelay: `${randomDelay}s`,
           transform: "scale(0)",
           transformOrigin: "bottom",
@@ -63,6 +63,14 @@ export const Flower = ({
   );
 };
 
+const colors = [
+  "#E74C3C", // petal 1 – bright crimson red
+  "#FF8C42", // petal 2 – glowing pumpkin orange
+  "#FFD166", // petal 3 – bold golden yellow
+  "#FFB3C1", // accent – soft but bright petal pink
+  "#3C7A3B", // stem – lively mid-green, not too dark
+];
+
 export default function Garden() {
   const [plantType, setPlantType] = useState<"flowers" | "eggplants">(
     "flowers"
@@ -71,21 +79,13 @@ export default function Garden() {
   const [eggplants, setEggplants] = useState<Drawing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
-  const [brushColor, setBrushColor] = useState("#EB3963");
+  const [brushColor, setBrushColor] = useState(colors[0]);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [caption, setCaption] = useState(`Add ${plantType} to our garden? `);
   const [displayedCaption, setDisplayedCaption] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const canvasRef = useRef<CanvasRef>(null);
-
-  const colors = [
-    "#E74C3C", // petal 1 – bright crimson red
-    "#FF8C42", // petal 2 – glowing pumpkin orange
-    "#FFD166", // petal 3 – bold golden yellow
-    "#FFB3C1", // accent – soft but bright petal pink
-    "#3C7A3B", // stem – lively mid-green, not too dark
-  ];
 
   useEffect(() => {
     fetchFlowers();
@@ -479,7 +479,7 @@ export default function Garden() {
                 ref={canvasRef}
                 brushColor={brushColor}
                 brushSize={10}
-                className="border-4 border-gray-600 border-dashed rounded cursor-crosshair touch-none"
+                className="border-4 border-gray-300 rounded cursor-crosshair touch-none"
               />
 
               <div className="flex gap-2 flex-col items-center">
@@ -518,21 +518,6 @@ export default function Garden() {
           }
           50% {
             transform: translateY(-10px);
-          }
-        }
-
-        @keyframes growIn {
-          0% {
-            transform: scale(0.5);
-            transform-origin: bottom;
-          }
-          50% {
-            transform: scale(0.95);
-            transform-origin: bottom;
-          }
-          100% {
-            transform: scale(1);
-            transform-origin: bottom;
           }
         }
       `}</style>
