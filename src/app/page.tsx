@@ -89,7 +89,6 @@ export default function Garden() {
 
   useEffect(() => {
     fetchFlowers();
-    fetchEggplants();
   }, []);
 
   // Typing effect for caption
