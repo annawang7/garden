@@ -38,11 +38,7 @@ export const DrawFlower = ({
     >
       {/* Drawing tools row */}
       {/* Caption */}
-      <div
-        className={`text-lg text-gray-600 text-center font-medium ${
-          orientation === "horizontal" ? "pl-10" : ""
-        }`}
-      >
+      <div className={`text-lg text-gray-600 text-center font-medium`}>
         {plantType === "eggplants" && (
           <button
             className="text-xs text-green-800 hover:underline"
@@ -58,14 +54,14 @@ export const DrawFlower = ({
       </div>
 
       <div
-        className={`flex mb-3 ${
+        className={`flex relative mb-3 ${
           orientation === "horizontal" ? "flex-row gap-4" : "flex-col"
         }`}
       >
         <div
           className={`flex flex-col gap-2 py-2  ${
             orientation === "horizontal"
-              ? "flex-col"
+              ? "absolute left-[-40px] top-0 flex-col"
               : "flex-row items-center justify-center"
           }`}
         >

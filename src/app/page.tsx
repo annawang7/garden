@@ -398,7 +398,7 @@ export default function Garden() {
       </h1>
 
       {/* Island background */}
-      <div className="z-10 flex md:gap-20 pb-10 px-4 gap-10 flex-col md:flex-row w-full h-full justify-center items-center flex-1">
+      <div className="z-10 flex md:gap-28 pb-10 px-4 gap-10 flex-col md:flex-row w-full h-full justify-center items-center flex-1">
         <div style={{ animation: "bob 3s ease-in-out infinite" }}>
           <img
             src="/island.png"
