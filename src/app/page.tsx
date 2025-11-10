@@ -388,7 +388,7 @@ export default function Garden() {
 
   return (
     <div
-      className={`min-h-screen h-full overflow-auto flex flex-col items-center justify-start relative ${rubikDoodleShadow.className}`}
+      className={`min-h-dvh h-full overflow-auto flex flex-col items-center justify-start relative ${rubikDoodleShadow.className}`}
       style={{
         background: "#fffff3",
       }}

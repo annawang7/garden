@@ -111,7 +111,7 @@ export default function Moderate() {
 
   return (
     <div
-      className={`min-h-screen p-8 ${walterTurncoat.className}`}
+      className={`min-h-dvh p-8 ${walterTurncoat.className}`}
       style={{ background: "#fffff3" }}
     >
       {/* Header */}

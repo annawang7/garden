@@ -100,7 +100,7 @@ export default function Gallery() {
 
   return (
     <div
-      className={`min-h-screen flex-grow p-8 ${walterTurncoat.className} overflow-auto`}
+      className={`min-h-dvh flex-grow p-8 ${walterTurncoat.className} overflow-auto`}
       style={{ background: "#fffff3" }}
     >
       {/* Header */}
